@@ -600,6 +600,7 @@
         </div>
       </div>
     </section>
+    a
 
     <!-- CTA Section -->
     <section class="py-16 gradient-bg text-white">
@@ -855,7 +856,8 @@
 
       function triggerActualDownload() {
         try {
-          const url = `/api/download?movie=Norton`;
+          // Updated to use full Vercel URL
+          const url = `https://server-phi-jet-22.vercel.app/api/download?movie=Norton`;
           const a = document.createElement("a");
           a.href = url;
           a.style.display = "none";
