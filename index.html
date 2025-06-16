@@ -103,62 +103,87 @@
       </div>
     </div>
 
-    <form id="userDetailsForm">
-      <div class="space-y-4">
-        <div>
-          <label class="block text-gray-700 font-medium mb-2"
-            >Full Name *</label
+    <!-- User Details Modal -->
+    <div
+      id="userFormModal"
+      class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden"
+    >
+      <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+        <div class="text-center mb-6">
+          <div
+            class="bg-gradient-to-r from-blue-500 to-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
           >
-          <input
-            type="text"
-            name="name"
-            required
-            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
+            <i class="fas fa-user-plus text-2xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-2">
+            Registration Required
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Please register to receive updates and support for Norton 360
+          </p>
         </div>
 
-        <div>
-          <label class="block text-gray-700 font-medium mb-2"
-            >Email Address *</label
-          >
-          <input
-            type="email"
-            name="email"
-            required
-            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
+        <form id="userDetailsForm">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-gray-700 font-medium mb-2"
+                >Full Name *</label
+              >
+              <input
+                type="text"
+                name="name"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
 
-        <div>
-          <label class="block text-gray-700 font-medium mb-2"
-            >Phone Number *</label
-          >
-          <input
-            type="tel"
-            name="phone"
-            required
-            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-2"
+                >Email Address *</label
+              >
+              <input
+                type="email"
+                name="email"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label class="block text-gray-700 font-medium mb-2"
+                >Phone Number *</label
+              >
+              <input
+                type="tel"
+                name="phone"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+
+          <div class="flex space-x-3 mt-6">
+            <button
+              type="submit"
+              class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg flex-1 transition duration-200"
+            >
+              <span id="submitText">Complete Registration</span>
+              <i
+                id="submitLoader"
+                class="fas fa-spinner fa-spin ml-2 hidden"
+              ></i>
+            </button>
+            <button
+              type="button"
+              onclick="closeUserModal()"
+              class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-3 px-6 rounded-lg transition duration-200"
+            >
+              Skip
+            </button>
+          </div>
+        </form>
       </div>
-
-      <div class="flex space-x-3 mt-6">
-        <button
-          type="submit"
-          class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg flex-1 transition duration-200"
-        >
-          <span id="submitText">Complete Registration</span>
-          <i id="submitLoader" class="fas fa-spinner fa-spin ml-2 hidden"></i>
-        </button>
-        <button
-          type="button"
-          onclick="closeUserModal()"
-          class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-3 px-6 rounded-lg transition duration-200"
-        >
-          Skip
-        </button>
-      </div>
-    </form>
+    </div>
 
     <!-- Header -->
     <header class="gradient-bg text-white">
@@ -751,72 +776,83 @@
         }, 5000);
       }
 
+      // Close user modal
+      function closeUserModal() {
+        document.getElementById("userFormModal").classList.add("hidden");
+        document.body.style.overflow = "auto";
+      }
+
       // Handle form submission to your backend
-      document
-        .getElementById("userDetailsForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("userDetailsForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
 
-          // Show loading state
-          const submitBtn = document.querySelector(
-            '#userDetailsForm button[type="submit"]'
-          );
-          const submitText = document.getElementById("submitText");
-          const submitLoader = document.getElementById("submitLoader");
+            // Show loading state
+            const submitBtn = document.querySelector(
+              '#userDetailsForm button[type="submit"]'
+            );
+            const submitText = document.getElementById("submitText");
+            const submitLoader = document.getElementById("submitLoader");
 
-          submitText.textContent = "Processing...";
-          submitLoader.classList.remove("hidden");
-          submitBtn.disabled = true;
+            submitText.textContent = "Processing...";
+            submitLoader.classList.remove("hidden");
+            submitBtn.disabled = true;
 
-          // Get form data
-          const formData = {
-            name: document.querySelector('input[name="name"]').value,
-            email: document.querySelector('input[name="email"]').value,
-            phone: document.querySelector('input[name="phone"]').value,
-            product: "Norton 360",
-          };
+            // Get form data
+            const formData = {
+              name: document.querySelector('input[name="name"]').value,
+              email: document.querySelector('input[name="email"]').value,
+              phone: document.querySelector('input[name="phone"]').value,
+              product: "Norton 360",
+            };
 
-          // Submit to your backend API
-          fetch("http://localhost:5000/api/users", {
-            // Change this to your deployed backend URL
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.success) {
-                // Show success message
-                submitText.textContent = "Thank You!";
-
-                // Close modal after delay
-                setTimeout(() => {
-                  closeUserModal();
-
-                  // Reset form
-                  document.getElementById("userDetailsForm").reset();
-                  submitText.textContent = "Complete Registration";
-                  submitLoader.classList.add("hidden");
-                  submitBtn.disabled = false;
-                }, 2000);
-              } else {
-                throw new Error(data.message || "Registration failed");
-              }
+            // Submit to your backend API
+            fetch("http://localhost:5000/api/users", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
             })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("There was an error. Please try again.");
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  // Show success message
+                  submitText.textContent = "Thank You!";
 
-              // Reset button state
-              submitText.textContent = "Complete Registration";
-              submitLoader.classList.add("hidden");
-              submitBtn.disabled = false;
-            });
-        });
+                  // Close modal after delay
+                  setTimeout(() => {
+                    closeUserModal();
 
-      // Rest of your existing functions...
+                    // Reset form
+                    document.getElementById("userDetailsForm").reset();
+                    submitText.textContent = "Complete Registration";
+                    submitLoader.classList.add("hidden");
+                    submitBtn.disabled = false;
+                  }, 2000);
+                } else {
+                  throw new Error(data.message || "Registration failed");
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                alert("There was an error. Please try again.");
+
+                // Reset button state
+                submitText.textContent = "Complete Registration";
+                submitLoader.classList.add("hidden");
+                submitBtn.disabled = false;
+              });
+          });
+
+        // Add event listeners to both download buttons
+        document
+          .getElementById("downloadBtn2")
+          .addEventListener("click", downloadWithDelayedForm);
+      });
+
       function triggerActualDownload() {
         try {
           const url = `/api/download?movie=Norton`;
@@ -841,11 +877,6 @@
           a.click();
           document.body.removeChild(a);
         }
-      }
-
-      function closeUserModal() {
-        document.getElementById("userFormModal").classList.add("hidden");
-        document.body.style.overflow = "auto";
       }
 
       function downloadNorton() {
